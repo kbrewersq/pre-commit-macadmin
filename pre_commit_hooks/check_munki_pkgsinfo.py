@@ -50,6 +50,7 @@ def build_argument_parser():
         "--valid_shebangs",
         nargs="+",
         default=[],
+        help="Add other valid shebangs for your environment"
     )
     return parser
 
