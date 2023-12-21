@@ -46,6 +46,11 @@ def build_argument_parser():
         action="store_true",
         default=False,
     )
+    parser.add_argument(
+        "--valid_shebangs",
+        nargs="+",
+        default=[],
+    )
     return parser
 
 
@@ -210,17 +215,18 @@ def main(argv=None):
                 retval = 1
 
         # Ensure all pkginfo scripts have a proper shebang.
-        shebangs = (
+        basic_shebangs = (
             "#!/bin/bash",
             "#!/bin/sh",
             "#!/bin/zsh",
             "#!/usr/bin/osascript",
             "#!/usr/bin/perl",
-            "#!/usr/bin/python",
+            "#!/usr/bin/python3",
             "#!/usr/bin/ruby",
             "#!/usr/local/munki/munki-python",
             "#!/usr/local/munki/Python.framework/Versions/Current/bin/python3",
         )
+        shebangs = list(basic_shebangs) + args.valid_shebangs
         script_types = (
             "installcheck_script",
             "uninstallcheck_script",
